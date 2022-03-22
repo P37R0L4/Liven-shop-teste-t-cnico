@@ -1,9 +1,12 @@
-import { Tag, Flex, Text, Wrap, WrapItem, TagLabel, TagCloseButton, TagRightIcon } from "@chakra-ui/react";
-import { useState } from "react";
-import { FaPlusCircle } from 'react-icons/fa'
+import { Tag, Flex, Text, Wrap, WrapItem, TagLabel, TagCloseButton } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 
 interface SideBarProps {
   categories: (String | undefined)[]
+  setSelectedFilter: Dispatch<SetStateAction<(String | undefined)[]>>;
+  selectedFilter: (String | undefined)[];
+  removeItemFromArray: (item: String | undefined) => void;
+  addItemFromArray: (item: String | undefined) => void;
 }
 
 const filters = [
@@ -16,18 +19,9 @@ const filters = [
   'more than $501'
 ]
 
-export default function SideBar({ categories }: SideBarProps) {
-  const [selectedFiltered, setSelectedFiltered] = useState<(String | undefined)[]>([]);
-
-  function RemoveItemFromArray(item: String | undefined) {
-    var index = selectedFiltered.indexOf(item);
-    if (index !== -1) {
-      setSelectedFiltered(selectedFiltered.filter(e => e !== item));
-    }
-  }
-
+export default function SideBar({ categories, addItemFromArray, setSelectedFilter, selectedFilter, removeItemFromArray }: SideBarProps) {
   return (
-    <Flex p={4} w="20rem" h="100vh" top={0} position="sticky" shadow="base" direction="column">
+    <Flex bg="white" p={4} w="20rem" h="100vh" top={0} position="sticky" shadow="base" direction="column">
       <Text fontWeight="bold" fontSize="30" mb={5}>Categories</Text>
       <Wrap alignItems="flex-start">
 
@@ -37,15 +31,13 @@ export default function SideBar({ categories }: SideBarProps) {
               size="md"
               key={`categories-${index}`}
               variant='solid'
-              colorScheme={selectedFiltered.indexOf(item) >= 0 ? 'purple' : 'gray'}>
-              <TagLabel onClick={() => {
-                setSelectedFiltered([...selectedFiltered, item])
-              }}>
+              colorScheme={selectedFilter.indexOf(item) >= 0 ? 'purple' : 'gray'}>
+              <TagLabel onClick={() => addItemFromArray(item)}>
                 {item}
               </TagLabel>
 
               <TagCloseButton onClick={() => {
-                RemoveItemFromArray(item)
+                removeItemFromArray(item)
               }} />
             </Tag>
           </WrapItem>
@@ -61,15 +53,15 @@ export default function SideBar({ categories }: SideBarProps) {
               size="md"
               key={`filter-${index}`}
               variant='solid'
-              colorScheme={selectedFiltered.indexOf(item) >= 0 ? 'pink' : 'gray'}>
+              colorScheme={selectedFilter.indexOf(item) >= 0 ? 'pink' : 'gray'}>
               <TagLabel onClick={() => {
-                setSelectedFiltered([...selectedFiltered, item])
+                setSelectedFilter([...selectedFilter, item])
               }}>
                 {item}
               </TagLabel>
 
               <TagCloseButton onClick={() => {
-                RemoveItemFromArray(item)
+                removeItemFromArray(item)
               }} />
             </Tag>
           </WrapItem>

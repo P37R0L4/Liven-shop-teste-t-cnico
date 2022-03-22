@@ -1,4 +1,5 @@
-import { Stack, HStack, Text } from '@chakra-ui/react';
+import { Stack, HStack, Text, WrapItem } from '@chakra-ui/react';
+import ProductCard from '../Cards/ProductCard';
 
 import { PaginationItem } from './PaginationItem';
 
@@ -17,6 +18,16 @@ function generatePagesArray(from: number, to: number) {
       return from + index + 1;
     })
     .filter((page) => page > 0);
+}
+
+export function slicePagination(arr: Products[], first: number, size: number) {
+  return arr
+    .slice(first, size)
+    .map((item: Products, index: number) => (
+      <WrapItem key={`item-product-card${index}`}>
+        <ProductCard {...item} />
+      </WrapItem>
+    ));
 }
 
 export function Pagination({
