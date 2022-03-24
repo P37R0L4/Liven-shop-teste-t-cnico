@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
 
       <HStack direction="column" alignItems="flex-start">
-        <Flex>
+        <Flex w="full">
           {children}
         </Flex>
       </HStack>

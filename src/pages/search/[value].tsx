@@ -29,7 +29,7 @@ export default function Search({ value, products }: SearchProps) {
         <VStack w="full" alignItems="flex-start" spacing={8}>
           <Text fontSize={30}>All products in "{value}"...</Text>
           <Wrap>
-            {slicePagination(products, pageStart, pageEnd)}
+            {products.length > 0 ? slicePagination(products, pageStart, pageEnd) : <Text>Nenhum item encontrado...</Text>}
           </Wrap>
 
           <Pagination
@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const productsByName = await (await fetch(`https://fakestoreapi.com/products`))
       .json()
 
-    products = productsByName.filter(({ title }: Products) => title.indexOf(value as string) !== -1)
+    products = productsByName.filter(({ title }: Products) => title.toLowerCase().indexOf((value as string).toLowerCase()) !== -1)
   }
 
   return {

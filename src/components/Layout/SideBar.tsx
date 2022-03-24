@@ -26,7 +26,7 @@ export default function SideBar({ categories, addItemFromArray, setSelectedFilte
       <Wrap alignItems="flex-start">
 
         {categories.map((item, index) =>
-          <WrapItem>
+          <WrapItem key={`category-list-${index}`}>
             <Tag
               size="md"
               key={`categories-${index}`}
@@ -48,7 +48,7 @@ export default function SideBar({ categories, addItemFromArray, setSelectedFilte
 
       <Wrap alignItems="flex-start">
         {filters.map((item, index) =>
-          <WrapItem>
+          <WrapItem key={`category-list-${index}`}>
             <Tag
               size="md"
               key={`filter-${index}`}

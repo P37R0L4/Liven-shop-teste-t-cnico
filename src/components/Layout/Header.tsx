@@ -1,4 +1,5 @@
 import { HStack, IconButton, Text, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
@@ -37,7 +38,9 @@ export default function Header() {
         </InputGroup>
 
         <IconButton icon={<FaShoppingCart />} colorScheme="pink" rounded="full" aria-label="shopping icon" />
-        <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
+        <Link href="/auth">
+          <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
+        </Link>
       </HStack>
     </HStack>
   )
