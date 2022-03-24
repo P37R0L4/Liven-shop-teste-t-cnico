@@ -1,12 +1,15 @@
 import { HStack, IconButton, Text, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
+import { UserContext } from "../../contexts/userLoggedContext";
 
 export default function Header() {
-  const { push } = useRouter();
   const [searchTxt, setSearchTxt] = useState('');
+  const { userLogged } = useContext(UserContext);
+  const { username } = userLogged
+  const { push } = useRouter();
 
   function pushToRoute(event) {
     if (event === 'Enter' || event == 'click') {
@@ -38,7 +41,7 @@ export default function Header() {
         </InputGroup>
 
         <IconButton icon={<FaShoppingCart />} colorScheme="pink" rounded="full" aria-label="shopping icon" />
-        <Link href="/auth">
+        <Link href={username ? "/profile" : "/auth"}>
           <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
         </Link>
       </HStack>

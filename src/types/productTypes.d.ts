@@ -12,3 +12,25 @@ declare type Products = {
   image?: string;
   rating?: ProductRating;
 };
+
+declare type userData = {
+  email: string;
+  username: string;
+  password: string;
+  id: number;
+  phone: string;
+  name: {
+    firstname: string;
+    lastname: string;
+  },
+  address: {
+    city: string;
+    street: string;
+    number: number;
+    zipcode: string;
+    geolocation: {
+      lat: string;
+      long: string;
+    },
+  },
+};
