@@ -12,8 +12,8 @@ export default function Home({ products, categories }: any) {
   const [selectedFilter, setSelectedFilter] = useState<(String | undefined)[]>([]);
   const [productsFiltered, setProductsFiltered] = useState<Products[]>([]);
 
-  const pageStart = (Number(page) - 1) * Number(8);
-  const pageEnd = pageStart + Number(8);
+  const pageStart = (Number(page) - 1) * Number(10);
+  const pageEnd = pageStart + Number(10);
 
   useEffect(() => {
     window.scrollTo(0, 0)

@@ -1,4 +1,4 @@
-import { HStack, IconButton, Text, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
+import { HStack, IconButton, Text, InputGroup, Input, InputRightElement, Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -8,7 +8,7 @@ import { UserContext } from "../../contexts/userLoggedContext";
 export default function Header() {
   const [searchTxt, setSearchTxt] = useState('');
   const { userLogged } = useContext(UserContext);
-  const { username } = userLogged
+  const { name } = userLogged
   const { push } = useRouter();
 
   function pushToRoute(event) {
@@ -20,10 +20,12 @@ export default function Header() {
 
   return (
     <HStack bg="purple.700" color="white" left="15rem" shadow="base" h="4rem" w="full" flex="1" py={4} px={10} justifyContent="space-between">
-      <HStack alignItems="flex-end" spacing={1}>
-        <Text fontWeight="bold" fontSize={25} color="white">LIVEN</Text>
-        <Text>WebStore</Text>
-      </HStack>
+      <Link href="/">
+        <HStack alignItems="flex-end" spacing={1}>
+          <Text fontWeight="bold" fontSize={25} color="white">LIVEN</Text>
+          <Text>WebStore</Text>
+        </HStack>
+      </Link>
 
       <HStack>
         <InputGroup colorScheme="purple">
@@ -41,9 +43,18 @@ export default function Header() {
         </InputGroup>
 
         <IconButton icon={<FaShoppingCart />} colorScheme="pink" rounded="full" aria-label="shopping icon" />
-        <Link href={username ? "/profile" : "/auth"}>
-          <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
-        </Link>
+        <Tooltip
+          hasArrow
+          placement="bottom-start"
+          bg="pink.600"
+          color="white"
+          rounded="md"
+          shouldWrapChildren
+          label={name ? `Welcome ${name.firstname}!` : 'Signin'}>
+          <Link href={name ? "/profile" : "/auth"}>
+            <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
+          </Link>
+        </Tooltip>
       </HStack>
     </HStack>
   )

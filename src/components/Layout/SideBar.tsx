@@ -1,5 +1,6 @@
-import { Tag, Flex, Text, Wrap, WrapItem, TagLabel, TagCloseButton } from "@chakra-ui/react";
+import { Tag, Flex, Text, Wrap, VStack, WrapItem, HStack, IconButton, TagLabel, TagCloseButton, Divider } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
+import { FaPlus, FaTrash } from "react-icons/fa";
 
 interface SideBarProps {
   categories: (String | undefined)[]
@@ -21,50 +22,66 @@ const filters = [
 
 export default function SideBar({ categories, addItemFromArray, setSelectedFilter, selectedFilter, removeItemFromArray }: SideBarProps) {
   return (
-    <Flex bg="white" p={4} w="20rem" h="100vh" top={0} position="sticky" shadow="base" direction="column">
+    <Flex bg="white" p={4} w="20rem" h="full" top={0} position="sticky" shadow="base" direction="column">
       <Text fontWeight="bold" fontSize="30" mb={5}>Categories</Text>
-      <Wrap alignItems="flex-start">
+      <VStack alignItems="flex-start">
 
         {categories.map((item, index) =>
-          <WrapItem key={`category-list-${index}`}>
-            <Tag
-              size="md"
-              key={`categories-${index}`}
-              variant='solid'
-              colorScheme={selectedFilter.indexOf(item) >= 0 ? 'purple' : 'gray'}>
-              <TagLabel onClick={() => addItemFromArray(item)}>
+          <>
+            <HStack w="full" justifyContent="space-between" p={1}>
+              <Text
+                size="md"
+                key={`categories-${index}`}
+                variant='solid'>
                 {item}
-              </TagLabel>
+              </Text>
 
-              <TagCloseButton onClick={() => {
-                removeItemFromArray(item)
-              }} />
-            </Tag>
-          </WrapItem>
+              <IconButton
+                rounded="full"
+                size="sm"
+                colorScheme={selectedFilter.indexOf(item) >= 0 ? 'purple' : 'gray'}
+                aria-label={`${item}-filter-button`}
+                icon={selectedFilter.indexOf(item) >= 0 ? <FaTrash /> : <FaPlus />}
+                onClick={
+                  () => {
+                    selectedFilter.indexOf(item) >= 0
+                      ? removeItemFromArray(item)
+                      : addItemFromArray(item)
+                  }} />
+            </HStack>
+            <Divider />
+          </>
         )}
-      </Wrap>
+      </VStack>
 
       <Text fontWeight="bold" fontSize="30" my={5}>Filters</Text>
 
       <Wrap alignItems="flex-start">
         {filters.map((item, index) =>
-          <WrapItem key={`category-list-${index}`}>
-            <Tag
-              size="md"
-              key={`filter-${index}`}
-              variant='solid'
-              colorScheme={selectedFilter.indexOf(item) >= 0 ? 'pink' : 'gray'}>
-              <TagLabel onClick={() => {
-                setSelectedFilter([...selectedFilter, item])
-              }}>
+          <>
+            <HStack w="full" justifyContent="space-between" p={1}>
+              <Text
+                size="md"
+                key={`categories-${index}`}
+                variant='solid'>
                 {item}
-              </TagLabel>
+              </Text>
 
-              <TagCloseButton onClick={() => {
-                removeItemFromArray(item)
-              }} />
-            </Tag>
-          </WrapItem>
+              <IconButton
+                rounded="full"
+                size="sm"
+                aria-label={`${item}-filter-button`}
+                icon={selectedFilter.indexOf(item) >= 0 ? <FaTrash /> : <FaPlus />}
+                colorScheme={selectedFilter.indexOf(item) >= 0 ? 'pink' : 'gray'}
+                onClick={
+                  () => {
+                    selectedFilter.indexOf(item) >= 0
+                      ? removeItemFromArray(item)
+                      : addItemFromArray(item)
+                  }} />
+            </HStack>
+            <Divider />
+          </>
         )}
       </Wrap>
     </Flex>

@@ -1,6 +1,8 @@
-import { Text, Flex, HStack, VStack, Image, Divider, Wrap, WrapItem } from "@chakra-ui/react"
+import { Text, Flex, HStack, VStack, Image, Divider, Wrap, WrapItem, Button } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import Link from "next/link";
+import { FaPlus } from "react-icons/fa";
+import { CgShoppingBag } from "react-icons/cg";
 import ProductCard from "../../components/Cards/ProductCard";
 import Layout from "../../components/Layout"
 
@@ -50,6 +52,11 @@ export default function Product({ productData, productsByCategory }: ProductProp
                 <Divider />
                 <Text fontSize={20}>{description}</Text>
               </VStack>
+
+              <HStack py={10}>
+                <Button leftIcon={<CgShoppingBag />} size="lg" colorScheme="purple">Buy</Button>
+                <Button leftIcon={<FaPlus />} size="lg" colorScheme="pink">Add to cart</Button>
+              </HStack>
             </VStack>
           </HStack>
         </Flex>

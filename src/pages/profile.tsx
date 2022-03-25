@@ -28,8 +28,15 @@ export default function Profile() {
             {profileForm(userLogged, enableToEdit)}
           </Wrap>
         </VStack>
+
         <HStack>
-          <Button onClick={() => setEnableToEdit(!enableToEdit)} colorScheme="purple" size="lg">{enableToEdit ? 'Edit' : 'Block edit'}</Button>
+          <Button
+            onClick={() => setEnableToEdit(!enableToEdit)}
+            colorScheme="purple"
+            size="lg">
+            {enableToEdit ? 'Edit' : 'Block edit'}
+          </Button>
+
           <Button colorScheme="pink" size="lg">Save</Button>
         </HStack>
       </VStack>
