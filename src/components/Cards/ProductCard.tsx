@@ -34,7 +34,7 @@ export default function ProductCard({ image, title, price, category, id = 0, rat
               </VStack>
             </HStack>
 
-            <Text w="15rem" isTruncated noOfLines={2} whiteSpace="break-spaces">{title}</Text>
+            <Text w="full" isTruncated noOfLines={2} whiteSpace="break-spaces">{title}</Text>
             <Text opacity={0.5}>{category}</Text>
           </VStack>
         </HStack>
