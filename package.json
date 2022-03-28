@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "test": "jest --watch"
   },
   "dependencies": {
+    "@babel/plugin-syntax-jsx": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
     "@chakra-ui/react": "^1.8.6",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
