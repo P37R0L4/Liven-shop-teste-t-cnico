@@ -17,7 +17,7 @@ export default function Search({ value, products }: SearchProps) {
 
   return (
     <Layout>
-      <VStack py={8} px={20} spacing={8}>
+      <VStack py={8} px={[5, 20]} spacing={8}>
         <HStack w="full" spacing={4}>
           <Link href="/">Home</Link>
           <Divider orientation='vertical' />
@@ -26,7 +26,7 @@ export default function Search({ value, products }: SearchProps) {
           <Divider orientation='vertical' />
         </HStack>
 
-        <VStack w="full" alignItems="flex-start" spacing={8}>
+        <VStack alignItems="flex-start" spacing={8}>
           <Text fontSize={30}>All products in "{value}"...</Text>
           <Wrap>
             {products.length > 0 ? slicePagination(products, pageStart, pageEnd) : <Text>No items found...</Text>}

@@ -3,6 +3,27 @@ declare type ProductRating = {
   count?: number;
 };
 
+declare type UserAddress = {
+  city: string;
+  street: string;
+  number: number;
+  zipcode: string;
+  geolocation: {
+    lat: string;
+    long: string;
+  },
+};
+
+declare type UserName = {
+  firstname: string;
+  lastname: string;
+}
+
+declare type ProductOnCart = {
+  productId?: number;
+  quantity?: number;
+};
+
 declare type Products = {
   id?: number;
   title?: string;
@@ -11,26 +32,15 @@ declare type Products = {
   category?: string;
   image?: string;
   rating?: ProductRating;
+  quantity?: number;
 };
 
-declare type userData = {
+declare type UserData = {
   email: string;
   username: string;
   password: string;
   id: number;
   phone: string;
-  name: {
-    firstname: string;
-    lastname: string;
-  },
-  address: {
-    city: string;
-    street: string;
-    number: number;
-    zipcode: string;
-    geolocation: {
-      lat: string;
-      long: string;
-    },
-  },
+  name: UserName,
+  address: UserAddress;
 };

@@ -1,8 +1,8 @@
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface UserContextType {
-    setUserLogged: Dispatch<SetStateAction<userData>>;
-    userLogged: userData;
+    setUserLogged: Dispatch<SetStateAction<UserData>>;
+    userLogged: UserData;
     setLoading: Dispatch<SetStateAction<boolean>>;
     loading: boolean;
 }
@@ -10,16 +10,17 @@ interface UserContextType {
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 function UserProvider({ children }) {
-    const [userLogged, setUserLogged] = useState<userData>({} as userData);
+    const [userLogged, setUserLogged] = useState<UserData>({} as UserData);
     const [loading, setLoading] = useState(false);
 
     const relogin = async () => {
         const userId = localStorage.getItem('user_id')
 
         if (userId) {
-            const response = await fetch(`/api/user-relogin-data/${userId}`)
-            const obj = Object.values(await response.json())[0] as userData
-            setUserLogged(obj)
+            const responseUser = await fetch(`/api/user-relogin-data/${userId}`)
+            const objUser = Object.values(await responseUser.json())[0] as UserData
+
+            setUserLogged(objUser)
         }
     }
 

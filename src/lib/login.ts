@@ -7,6 +7,8 @@ export async function login(loginData, setUserLogged, setLoading) {
             'Content-Type': 'application/json'
         },
     });
-    const obj = Object.values(await response.json())[0] as userData
-    setUserLogged(obj)
+
+    const objUser = Object.values(await response.json())[0] as UserData
+    !window.localStorage.getItem('cart') && window.localStorage.setItem('cart', '[]')
+    setUserLogged(objUser)
 }

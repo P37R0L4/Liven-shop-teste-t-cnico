@@ -1,11 +1,12 @@
-import { HStack, IconButton, Text, InputGroup, Input, InputRightElement, Tooltip } from "@chakra-ui/react";
+import { HStack, IconButton, Text, InputGroup, Input, InputRightElement, Tooltip, Badge } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
 import { UserContext } from "../../contexts/userLoggedContext";
 
 export default function Header() {
+  const [quantityOnCart, setQuantityOnCart] = useState(0);
   const [searchTxt, setSearchTxt] = useState('');
   const { userLogged } = useContext(UserContext);
   const { name } = userLogged
@@ -18,8 +19,29 @@ export default function Header() {
     }
   }
 
+  useEffect(() => {
+    setQuantityOnCart(
+      window.localStorage.getItem('cart')
+        ? Object.values(
+          JSON.parse(window.localStorage.getItem('cart'))
+        ).length
+        : 0
+    )
+  })
+
   return (
-    <HStack bg="purple.700" color="white" left="15rem" shadow="base" h="4rem" w="full" flex="1" py={4} px={10} justifyContent="space-between">
+    <HStack
+      bg="purple.700"
+      color="white"
+      shadow="base"
+      h="4rem"
+      w="full"
+      flex="1"
+      py={4}
+      px={10}
+      position="fixed"
+      zIndex="tooltip"
+      justifyContent="space-between">
       <Link href="/">
         <HStack alignItems="flex-end" spacing={1}>
           <Text fontWeight="bold" fontSize={25} color="white">LIVEN</Text>
@@ -42,7 +64,20 @@ export default function Header() {
             rounded="full" />
         </InputGroup>
 
-        <IconButton icon={<FaShoppingCart />} colorScheme="pink" rounded="full" aria-label="shopping icon" />
+        <Link href="/cart">
+          <IconButton
+            disabled={!name}
+            icon={
+              <HStack m={5}>
+                {quantityOnCart !== 0 && <Badge rounded="full">{quantityOnCart}</Badge>}
+                <FaShoppingCart />
+              </HStack>
+            }
+            colorScheme="pink"
+            rounded="full"
+            aria-label="shopping icon" />
+        </Link>
+
         <Tooltip
           hasArrow
           placement="bottom-start"

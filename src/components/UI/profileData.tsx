@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input, WrapItem } from "@chakra-ui/react"
 
-export function profileForm(obj, enableToEdit) {
+export function profileData(obj) {
     return (
         Object.entries(obj).map(item => {
             if (item[0] !== 'id' && item[0] !== '__v') {
@@ -9,19 +9,19 @@ export function profileForm(obj, enableToEdit) {
                         <WrapItem w="40%">
                             <FormControl isRequired>
                                 <FormLabel htmlFor={item[0]}>{item[0]}</FormLabel>
-                                <Input disabled={enableToEdit} id={item[0]} type={item[0]} placeholder={item[0]} defaultValue={item[1]} />
+                                <Input disabled={true} id={item[0]} type={item[0]} placeholder={item[0]} defaultValue={item[1]} />
                             </FormControl>
                         </WrapItem>
                     )
                 } else {
                     return Object.entries(item[1]).map(subitem => {
-                        if (subitem[0] !== 'geolocation') {
+                        if (item[0] !== 'geolocation') {
                             return (
                                 <WrapItem w="40%">
                                     <FormControl isRequired>
                                         <FormLabel htmlFor={subitem[0]}>{subitem[0]}</FormLabel>
                                         <Input
-                                            disabled={enableToEdit}
+                                            disabled={true}
                                             id={subitem[0]}
                                             placeholder={subitem[0]}
                                             defaultValue={

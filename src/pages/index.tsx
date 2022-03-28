@@ -1,5 +1,5 @@
 
-import { Wrap, VStack } from '@chakra-ui/react'
+import { Wrap, VStack, Center, Text, HStack } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
@@ -38,28 +38,21 @@ export default function Home({ products, categories }: any) {
   }
 
   return (
-    <div>
-      <Head>
-        <title>Liven Webstore</title>
-        <meta name="description" content="Liven Webstore" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
+      <SideBar addItemFromArray={addItemFromArray} removeItemFromArray={removeItemFromArray} setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} categories={categories} />
+      <VStack alignItems="flex-start" w="full" p={6}>
+        <Text fontSize={20}>10 from {products.length} products found...</Text>
+        <Wrap>
+          {slicePagination(productsFiltered, pageStart, pageEnd)}
+        </Wrap>
 
-      <Layout>
-        <SideBar addItemFromArray={addItemFromArray} removeItemFromArray={removeItemFromArray} setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} categories={categories} />
-        <VStack w="calc(100vw - 20rem)" p={6}>
-          <Wrap mb={5}>
-            {slicePagination(productsFiltered, pageStart, pageEnd)}
-          </Wrap>
-
-          <Pagination
-            totalCountOfRegisters={Number(productsFiltered.length)}
-            currentPage={page}
-            onPageChange={setPage}
-          />
-        </VStack>
-      </Layout>
-    </div>
+        <Pagination
+          totalCountOfRegisters={Number(productsFiltered.length)}
+          currentPage={page}
+          onPageChange={setPage}
+        />
+      </VStack>
+    </Layout>
   )
 }
 

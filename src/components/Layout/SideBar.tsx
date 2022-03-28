@@ -10,22 +10,12 @@ interface SideBarProps {
   addItemFromArray: (item: String | undefined) => void;
 }
 
-const filters = [
-  'rate 0 - 1',
-  'rate 2 - 3',
-  'rate 4 - 5',
-  'Lass than $100',
-  '$100 - $300',
-  '$301 - $500',
-  'more than $501'
-]
-
 export default function SideBar({ categories, addItemFromArray, setSelectedFilter, selectedFilter, removeItemFromArray }: SideBarProps) {
   return (
-    <Flex bg="white" p={4} w="20rem" h="full" top={0} position="sticky" shadow="base" direction="column">
+    <Flex bg="white" p={6} m={3} w="30rem" h="full" top={20} position="sticky" shadow="base" direction="column">
       <Text fontWeight="bold" fontSize="30" mb={5}>Categories</Text>
-      <VStack alignItems="flex-start">
 
+      <VStack alignItems="flex-start">
         {categories.map((item, index) =>
           <>
             <HStack w="full" justifyContent="space-between" p={1}>
@@ -53,37 +43,6 @@ export default function SideBar({ categories, addItemFromArray, setSelectedFilte
           </>
         )}
       </VStack>
-
-      <Text fontWeight="bold" fontSize="30" my={5}>Filters</Text>
-
-      <Wrap alignItems="flex-start">
-        {filters.map((item, index) =>
-          <>
-            <HStack w="full" justifyContent="space-between" p={1}>
-              <Text
-                size="md"
-                key={`categories-${index}`}
-                variant='solid'>
-                {item}
-              </Text>
-
-              <IconButton
-                rounded="full"
-                size="sm"
-                aria-label={`${item}-filter-button`}
-                icon={selectedFilter.indexOf(item) >= 0 ? <FaTrash /> : <FaPlus />}
-                colorScheme={selectedFilter.indexOf(item) >= 0 ? 'pink' : 'gray'}
-                onClick={
-                  () => {
-                    selectedFilter.indexOf(item) >= 0
-                      ? removeItemFromArray(item)
-                      : addItemFromArray(item)
-                  }} />
-            </HStack>
-            <Divider />
-          </>
-        )}
-      </Wrap>
     </Flex>
   )
 }

@@ -7,10 +7,9 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     const { userLogin, userPassword } = req.body;
-    const users: userData[] = await (await fetch('https://fakestoreapi.com/users')).json()
-    console.log(users);
+    const users: UserData[] = await (await fetch('https://fakestoreapi.com/users')).json()
 
-    const queryResult = users.filter(({ username, password }: userData) =>
+    const queryResult = users.filter(({ username, password }: UserData) =>
       username === userLogin && password === userPassword
     )
 

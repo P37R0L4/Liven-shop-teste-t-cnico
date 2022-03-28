@@ -1,10 +1,12 @@
-import { Text, Flex, HStack, VStack, Image, Divider, Wrap, WrapItem, Button } from "@chakra-ui/react"
+import { Text, Flex, HStack, VStack, Image, Divider, Wrap, WrapItem, Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useToast } from "@chakra-ui/react"
 import { GetServerSideProps } from "next"
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 import { CgShoppingBag } from "react-icons/cg";
 import ProductCard from "../../components/Cards/ProductCard";
 import Layout from "../../components/Layout"
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 interface ProductProps {
   productData: Products;
@@ -13,9 +15,33 @@ interface ProductProps {
 
 export default function Product({ productData, productsByCategory }: ProductProps) {
   const { image, title, category, price, description, rating } = productData
+  const [quantity, setQuantity] = useState(1);
+  const { push } = useRouter()
+  const toast = useToast()
+
+  function addOnCart() {
+    const inCart = JSON.parse(window.localStorage.getItem('cart')) ?? []
+    const inCartQuantity = inCart.filter(({ id }: Products) => id === productData.id)
+
+    if (inCartQuantity.length <= 0) {
+      inCart.push({ ...productData, quantity: inCartQuantity.length + quantity })
+    } else {
+      inCartQuantity[0].quantity = inCartQuantity[0].quantity + quantity
+    }
+
+    window.localStorage.setItem('cart', JSON.stringify(inCart))
+    toast({
+      position: 'bottom-left',
+      title: `${productData.title} add to yout cart!`,
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
+
   return (
     <Layout>
-      <VStack py={8} px={20} spacing={8}>
+      <VStack flex="1" py={8} px={20} spacing={8}>
         <HStack w="full" spacing={4}>
           <Link href="/">Home</Link>
           <Divider orientation='vertical' />
@@ -24,42 +50,57 @@ export default function Product({ productData, productsByCategory }: ProductProp
           <Divider orientation='vertical' />
         </HStack>
 
-        <Flex bg="white" shadow="base" rounded="md" w="full" flex="1" py={6} px={10}>
-          <HStack w="full" h="full" alignItems="flex-start">
-            <Image src={image} w="30rem" h="30rem" />
+        <HStack
+          bg="white"
+          shadow="base"
+          rounded="md"
+          py={6}
+          px={10}
+          alignItems="flex-start">
+          <Image src={image} w="30rem" h="30rem" />
 
-            <VStack w="full" alignItems="flex-start" p="10">
-              <VStack>
-                <HStack alignItems="flex-start" w="full">
-                  <VStack alignItems="flex-start" spacing={-2}>
-                    <Text fontSize={20} fontWeight="bold" color="red.700">Rate</Text>
-                    <Text>{rating?.rate}</Text>
-                  </VStack>
-
-                  <VStack alignItems="flex-start" spacing={-2}>
-                    <Text fontSize={20} fontWeight="bold" color="red.700">Count</Text>
-                    <Text>{rating?.count}</Text>
-                  </VStack>
-                </HStack>
-
-                <Text fontWeight="bold" fontSize={30}>{title}</Text>
-              </VStack>
-
-              <Text fontSize={20}>{category}</Text>
-              <Text fontSize={30}>${price}</Text>
-
-              <VStack alignItems="flex-start">
-                <Divider />
-                <Text fontSize={20}>{description}</Text>
-              </VStack>
-
-              <HStack py={10}>
-                <Button leftIcon={<CgShoppingBag />} size="lg" colorScheme="purple">Buy</Button>
-                <Button leftIcon={<FaPlus />} size="lg" colorScheme="pink">Add to cart</Button>
+          <VStack w="full" alignItems="flex-start" p="10">
+            <VStack>
+              <HStack alignItems="flex-start" w="full">
+                <VStack alignItems="flex-start" spacing={-2}>
+                  <Text fontSize={20} fontWeight="bold" color="red.700">Rate</Text>
+                  <Text>{rating?.rate}</Text>
+                </VStack>
               </HStack>
+
+              <Text fontWeight="bold" fontSize={30}>{title}</Text>
             </VStack>
-          </HStack>
-        </Flex>
+
+            <Text fontSize={20}>{category}</Text>
+            <Text fontSize={30}>${price}</Text>
+
+            <VStack alignItems="flex-start">
+              <Divider />
+              <Text fontSize={20}>{description}</Text>
+            </VStack>
+
+            <VStack alignItems="flex-start" py={10}>
+              <HStack>
+                <Button onClick={() => { addOnCart(), push('/cart') }} leftIcon={<CgShoppingBag />} size="lg" colorScheme="purple">Buy</Button>
+                <Button onClick={() => addOnCart()} leftIcon={<FaPlus />} size="lg" colorScheme="pink">Add to cart</Button>
+              </HStack>
+
+              <Text>Quantity ({rating?.count} in stock)</Text>
+              <NumberInput
+                w="full"
+                onChange={(valueString) => setQuantity(Number(valueString))}
+                defaultValue={quantity}
+                min={1}
+                max={rating?.count}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </VStack>
+          </VStack>
+        </HStack>
 
         <Divider />
         <VStack w="full" alignItems="flex-start" spacing={4}>

@@ -1,6 +1,5 @@
-import { Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack, VStack } from "@chakra-ui/react";
 import React from "react";
-import Footer from "./Footer";
 import Header from "./Header";
 
 interface LayoutProps {
@@ -9,14 +8,12 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <Flex direction="column">
+    <>
       <Header />
 
-      <HStack direction="column" alignItems="flex-start">
-        <Flex w="full">
-          {children}
-        </Flex>
+      <HStack pt="4rem" direction="column" alignItems="flex-start">
+        {children}
       </HStack>
-    </Flex>
+    </>
   )
 }
