@@ -132,7 +132,7 @@ export default function Cart() {
                 <VStack w="full" alignItems="flex-start">
                     <Text fontSize={40} fontStyle="bold">close order</Text>
 
-                    <VStack spacing={10} alignItems="flex-start">
+                    <VStack spacing={2} alignItems="flex-start">
                         <Text color="purple.700" fontSize={20}>delivery address</Text>
                         <Wrap spacing={10} alignItems="flex-start">
                             {
