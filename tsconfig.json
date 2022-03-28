@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -30,7 +30,9 @@
     "**/*.ts",
     "**/*.tsx",
     "src/theme.ts",
-    "src/types/*.d.ts"
+    "src/types/*.d.ts",
+    "src/tests/*.test.tsx",
+    "src/jest.config.ts", "tests/index.test.js", "src/tests/testUtils.jsx", "src/tests/index.test.jsx",
   ],
   "exclude": [
     "node_modules"

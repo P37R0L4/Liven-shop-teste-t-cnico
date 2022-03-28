@@ -1,11 +1,11 @@
 
-import { Wrap, VStack, Center, Text, HStack } from '@chakra-ui/react'
+import { Wrap, VStack, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import SideBar from '../components/Layout/SideBar'
 import { Pagination, slicePagination } from '../components/UI/Pagination'
+import "@chakra-ui/react"
 
 export default function Home({ products, categories }: any) {
   const [page, setPage] = useState(1);
@@ -16,12 +16,8 @@ export default function Home({ products, categories }: any) {
   const pageEnd = pageStart + Number(10);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [page])
-
-  useEffect(() => {
-    const selectedProducts = products.filter((item: Products) => selectedFilter.includes(item.category))
-    setProductsFiltered(selectedProducts.length > 0 ? selectedProducts : products)
+    const selectedProducts = products?.filter((item: Products) => selectedFilter.includes(item.category))
+    setProductsFiltered(selectedProducts?.length > 0 ? selectedProducts : products)
   }, [selectedFilter])
 
   function removeItemFromArray(item: (String | undefined)) {
@@ -41,13 +37,13 @@ export default function Home({ products, categories }: any) {
     <Layout>
       <SideBar addItemFromArray={addItemFromArray} removeItemFromArray={removeItemFromArray} setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} categories={categories} />
       <VStack alignItems="flex-start" w="full" p={6}>
-        <Text fontSize={20}>10 from {products.length} products found...</Text>
+        <Text fontSize={20}>10 from {products?.length} products found...</Text>
         <Wrap>
           {slicePagination(productsFiltered, pageStart, pageEnd)}
         </Wrap>
 
         <Pagination
-          totalCountOfRegisters={Number(productsFiltered.length)}
+          totalCountOfRegisters={Number(productsFiltered?.length)}
           currentPage={page}
           onPageChange={setPage}
         />

@@ -21,8 +21,7 @@ function generatePagesArray(from: number, to: number) {
 }
 
 export function slicePagination(arr: Products[], first: number, size: number) {
-  return arr
-    .slice(first, size)
+  return arr?.slice(first, size)
     .map((item: Products, index: number) => (
       <WrapItem key={`item-product-card${index}`}>
         <ProductCard {...item} />

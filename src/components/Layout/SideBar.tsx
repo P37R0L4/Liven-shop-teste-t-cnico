@@ -16,7 +16,7 @@ export default function SideBar({ categories, addItemFromArray, setSelectedFilte
       <Text fontWeight="bold" fontSize="30" mb={5}>Categories</Text>
 
       <VStack alignItems="flex-start">
-        {categories.map((item, index) =>
+        {categories?.map((item, index) =>
           <>
             <HStack w="full" justifyContent="space-between" p={1}>
               <Text

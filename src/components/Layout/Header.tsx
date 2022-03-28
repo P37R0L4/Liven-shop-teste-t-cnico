@@ -27,19 +27,18 @@ export default function Header() {
   const [quantityOnCart, setQuantityOnCart] = useState(0);
   const [searchTxt, setSearchTxt] = useState('');
   const { userLogged } = useContext(UserContext);
-  const { name } = userLogged
-  const { push } = useRouter();
+  const router = useRouter();
   const cancelRef = useRef()
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function logout() {
     window.localStorage.clear();
-    push('/');
+    router.push('/');
   }
 
   function pushToRoute(event) {
     if (event === 'Enter' || event == 'click') {
-      push(`/search/${searchTxt}`)
+      router.push(`/search/${searchTxt}`)
       return
     }
   }
@@ -91,7 +90,7 @@ export default function Header() {
 
         <Link href="/cart">
           <IconButton
-            disabled={!name}
+            disabled={!userLogged?.name}
             icon={
               <HStack m={5}>
                 {quantityOnCart !== 0 && <Badge rounded="full">{quantityOnCart}</Badge>}
@@ -110,13 +109,13 @@ export default function Header() {
           color="white"
           rounded="md"
           shouldWrapChildren
-          label={name ? `Welcome ${name.firstname}!` : 'Signin'}>
-          <Link href={name ? "/profile" : "/auth"}>
+          label={userLogged?.name ? `Welcome ${userLogged?.name.firstname}!` : 'Signin'}>
+          <Link href={userLogged?.name ? "/profile" : "/auth"}>
             <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
           </Link>
         </Tooltip>
 
-        {name && <Button
+        {userLogged?.name && <Button
           onClick={onClose}
           size="sm"
           variant="unstyled">Logout</Button>}

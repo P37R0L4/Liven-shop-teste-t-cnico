@@ -9,11 +9,11 @@ import Link from "next/link";
 export default function Profile() {
   const { userLogged } = useContext(UserContext)
   const { name } = userLogged
-  const { push } = useRouter()
+   const router = useRouter();
 
   useEffect(() => {
     if (!name) {
-      push("/auth")
+      router.push("/auth")
     }
   }, [name])
 

@@ -13,7 +13,7 @@ export default function Cart() {
     const { userLogged } = useContext(UserContext)
     const { address } = userLogged
     const toast = useToast()
-    const { push } = useRouter()
+     const router = useRouter();
 
     function finishOrder() {
         window.localStorage.setItem('cart', '[]')
@@ -157,7 +157,7 @@ export default function Cart() {
                 </VStack>
             </VStack>
 
-            <Modal isOpen={showFinishOrder} onClose={() => { setShowFinishOrder(false); push('/') }}>
+            <Modal isOpen={showFinishOrder} onClose={() => { setShowFinishOrder(false); router.push('/') }}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>The order has sendded!</ModalHeader>

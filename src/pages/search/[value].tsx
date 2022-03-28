@@ -29,7 +29,7 @@ export default function Search({ value, products }: SearchProps) {
         <VStack alignItems="flex-start" spacing={8}>
           <Text fontSize={30}>All products in "{value}"...</Text>
           <Wrap>
-            {products.length > 0 ? slicePagination(products, pageStart, pageEnd) : <Text>No items found...</Text>}
+            {products?.length > 0 ? slicePagination(products, pageStart, pageEnd) : <Text>No items found...</Text>}
           </Wrap>
 
           <Pagination

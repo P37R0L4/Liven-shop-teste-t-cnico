@@ -10,13 +10,13 @@ export default function Auth() {
   const { setUserLogged, userLogged, loading, setLoading } = useContext(UserContext)
   const { id, username } = userLogged
 
-  const { push } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(false);
     if (username) {
       localStorage.setItem('user_id', id.toString())
-      push('/');
+      router.push('/');
     }
   }, [userLogged])
 

@@ -16,7 +16,7 @@ interface ProductProps {
 export default function Product({ productData, productsByCategory }: ProductProps) {
   const { image, title, category, price, description, rating } = productData
   const [quantity, setQuantity] = useState(1);
-  const { push } = useRouter()
+   const router = useRouter();
   const toast = useToast()
 
   function addOnCart() {
@@ -24,7 +24,7 @@ export default function Product({ productData, productsByCategory }: ProductProp
     const inCartQuantity = inCart.filter(({ id }: Products) => id === productData.id)
 
     if (inCartQuantity.length <= 0) {
-      inCart.push({ ...productData, quantity: inCartQuantity.length + quantity })
+      inCart.router.push({ ...productData, quantity: inCartQuantity.length + quantity })
     } else {
       inCartQuantity[0].quantity = inCartQuantity[0].quantity + quantity
     }
@@ -81,7 +81,7 @@ export default function Product({ productData, productsByCategory }: ProductProp
 
             <VStack alignItems="flex-start" py={10}>
               <HStack>
-                <Button onClick={() => { addOnCart(), push('/cart') }} leftIcon={<CgShoppingBag />} size="lg" colorScheme="purple">Buy</Button>
+                <Button onClick={() => { addOnCart(), router.push('/cart') }} leftIcon={<CgShoppingBag />} size="lg" colorScheme="purple">Buy</Button>
                 <Button onClick={() => addOnCart()} leftIcon={<FaPlus />} size="lg" colorScheme="pink">Add to cart</Button>
               </HStack>
 
