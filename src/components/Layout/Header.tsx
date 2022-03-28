@@ -19,8 +19,8 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState, useRef } from "react";
-import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
+import { useContext, useEffect, useState, useRef, useReducer } from "react";
+import { FaShoppingCart, FaSearch, FaUser, FaWindowClose } from 'react-icons/fa'
 import { UserContext } from "../../contexts/userLoggedContext";
 
 export default function Header() {
@@ -29,11 +29,12 @@ export default function Header() {
   const { userLogged } = useContext(UserContext);
   const router = useRouter();
   const cancelRef = useRef()
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   function logout() {
     window.localStorage.clear();
     router.push('/');
+    location.reload();
   }
 
   function pushToRoute(event) {
@@ -116,7 +117,7 @@ export default function Header() {
         </Tooltip>
 
         {userLogged?.name && <Button
-          onClick={onClose}
+          onClick={onOpen}
           size="sm"
           variant="unstyled">Logout</Button>}
 
@@ -141,7 +142,7 @@ export default function Header() {
                 No
               </Button>
 
-              <Button onClick={() => logout()} colorScheme='pink' ml={3}>
+              <Button onClick={() => { logout(), onClose() }} colorScheme='pink' ml={3}>
                 Yes
               </Button>
             </AlertDialogFooter>
