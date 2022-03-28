@@ -1,4 +1,4 @@
-import { Tag, Flex, Text, Wrap, VStack, WrapItem, HStack, IconButton, TagLabel, TagCloseButton, Divider } from "@chakra-ui/react";
+import { Flex, Text, VStack, HStack, IconButton, Divider } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 

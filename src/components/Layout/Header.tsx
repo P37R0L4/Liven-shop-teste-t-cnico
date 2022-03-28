@@ -1,7 +1,25 @@
-import { HStack, IconButton, Text, InputGroup, Input, InputRightElement, Tooltip, Badge } from "@chakra-ui/react";
+import {
+  HStack,
+  IconButton,
+  Text,
+  InputGroup,
+  Input,
+  AlertDialogContent,
+  AlertDialogBody,
+  AlertDialogCloseButton,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialog,
+  InputRightElement,
+  Tooltip,
+  Badge,
+  Button,
+  AlertDialogOverlay,
+  useDisclosure
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { FaShoppingCart, FaSearch, FaUser } from 'react-icons/fa'
 import { UserContext } from "../../contexts/userLoggedContext";
 
@@ -11,6 +29,13 @@ export default function Header() {
   const { userLogged } = useContext(UserContext);
   const { name } = userLogged
   const { push } = useRouter();
+  const cancelRef = useRef()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  function logout() {
+    window.localStorage.clear();
+    push('/');
+  }
 
   function pushToRoute(event) {
     if (event === 'Enter' || event == 'click') {
@@ -90,6 +115,39 @@ export default function Header() {
             <IconButton icon={<FaUser />} colorScheme="purple" rounded="full" aria-label="user icon" />
           </Link>
         </Tooltip>
+
+        {name && <Button
+          onClick={onClose}
+          size="sm"
+          variant="unstyled">Logout</Button>}
+
+        <AlertDialog
+          leastDestructiveRef={cancelRef}
+          motionPreset='slideInBottom'
+          onClose={onClose}
+          isOpen={isOpen}
+          isCentered
+        >
+          <AlertDialogOverlay />
+
+          <AlertDialogContent>
+            <AlertDialogHeader>Alert</AlertDialogHeader>
+            <AlertDialogCloseButton />
+            <AlertDialogBody>
+              Do you want to logout?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                No
+              </Button>
+
+              <Button onClick={() => logout()} colorScheme='pink' ml={3}>
+                Yes
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </HStack>
     </HStack>
   )
